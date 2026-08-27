@@ -6,7 +6,7 @@
   "scripts": {
     "test": "vitest",
     "test:run": "vitest run",
-    "dev": "node --watch src/block.js"
+    "dev": "node --watch src/blockchain.js"
   },
   "repository": {
     "type": "git",
