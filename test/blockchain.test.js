@@ -20,4 +20,12 @@ describe('Blockchain', () => {
     expect(blockchain.pendingTransactions).toHaveLength(1);
     expect(blockchain.pendingTransactions[0]).toEqual(transaction);
   });
+  it('should create a genesis block', () => {
+    // Arrange + Act
+    const blockchain = new Blockchain();
+
+    // Assert
+    expect(blockchain.chain).toHaveLength(1);
+    expect(blockchain.chain[0].index).toBe(0);
+  });
 });
