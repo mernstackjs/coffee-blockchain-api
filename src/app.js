@@ -25,3 +25,15 @@ app.post('/transactions', (req, res) => {
     message: 'Transaction added',
   });
 });
+
+app.post('/mine', (req, res) => {
+  const difficulty = process.env.NODE_ENV === 'test' ? 1 : 2;
+
+  blockchain.minePendingTransactions(difficulty);
+
+  const newBlock = blockchain.chain[blockchain.chain.length - 1];
+
+  res.status(201).json({
+    block: newBlock,
+  });
+});
