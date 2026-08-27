@@ -45,4 +45,19 @@ describe('Blockchain API', () => {
     expect(response.status).toBe(201);
     expect(response.body.block).toBeDefined();
   });
+
+  it('should reject a transaction without batchId', async () => {
+    // Arrange
+    const transaction = {
+      sender: 'Farm A',
+      recipient: 'Roastery B',
+      weightKg: 500,
+    };
+
+    // Act
+    const response = await request(app).post('/transactions').send(transaction);
+
+    // Assert
+    expect(response.status).toBe(400);
+  });
 });
