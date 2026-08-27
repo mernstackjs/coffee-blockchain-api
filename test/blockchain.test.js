@@ -69,4 +69,27 @@ describe('Blockchain', () => {
     // Assert
     expect(result).toBe(true);
   });
+  it('should return false when a block is changed', () => {
+    // Arrange
+    const blockchain = new Blockchain();
+
+    const transaction = {
+      sender: 'Farm A',
+      recipient: 'Roastery B',
+      batchId: 'COFFEE-001',
+      weightKg: 500,
+    };
+
+    blockchain.addTransaction(transaction);
+    blockchain.minePendingTransactions(2);
+
+    // Change the block
+    blockchain.chain[1].transactions[0].weightKg = 1000;
+
+    // Act
+    const result = blockchain.isChainValid();
+
+    // Assert
+    expect(result).toBe(false);
+  });
 });
