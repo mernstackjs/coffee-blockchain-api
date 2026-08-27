@@ -1,7 +1,12 @@
+import { config } from 'dotenv';
+
+config();
 import express from 'express';
 import { Blockchain } from './blockchain.js';
 
 export const app = express();
+
+const { NODE_ENV } = process.env;
 
 app.use(express.json());
 
