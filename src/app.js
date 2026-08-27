@@ -3,6 +3,7 @@ import { config } from 'dotenv';
 config();
 import express from 'express';
 import { Blockchain } from './blockchain.js';
+import { validateTransaction } from './middleware/validateTransaction.js';
 
 export const app = express();
 
@@ -16,7 +17,7 @@ app.get('/blockchain', (req, res) => {
   res.status(200).json(blockchain);
 });
 
-app.post('/transactions', (req, res) => {
+app.post('/transactions', validateTransaction, (req, res) => {
   const transaction = req.body;
 
   blockchain.addTransaction(transaction);
@@ -27,7 +28,7 @@ app.post('/transactions', (req, res) => {
 });
 
 app.post('/mine', (req, res) => {
-  const difficulty = process.env.NODE_ENV === 'test' ? 1 : 2;
+  const difficulty = NODE_ENV === 'test' ? 1 : 2;
 
   blockchain.minePendingTransactions(difficulty);
 
