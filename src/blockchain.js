@@ -1,4 +1,5 @@
 import { Block } from './block.js';
+import { calculateHash } from './hash.js';
 
 export class Blockchain {
   constructor() {
@@ -36,6 +37,32 @@ export class Blockchain {
     this.chain.push(newBlock);
 
     this.pendingTransactions = [];
+  }
+
+  isChainValid() {
+    for (let i = 1; i < this.chain.length; i++) {
+      const currentBlock = this.chain[i];
+      const previousBlock = this.chain[i - 1];
+
+      const data =
+        currentBlock.index +
+        currentBlock.timestamp +
+        JSON.stringify(currentBlock.transactions) +
+        currentBlock.previousHash +
+        currentBlock.nonce;
+
+      const newHash = calculateHash(data);
+
+      if (currentBlock.hash !== newHash) {
+        return false;
+      }
+
+      if (currentBlock.previousHash !== previousBlock.hash) {
+        return false;
+      }
+    }
+
+    return true;
   }
 }
 
