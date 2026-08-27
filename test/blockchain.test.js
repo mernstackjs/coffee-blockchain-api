@@ -49,4 +49,24 @@ describe('Blockchain', () => {
     expect(blockchain.chain[1].transactions).toEqual([transaction]);
     expect(blockchain.pendingTransactions).toHaveLength(0);
   });
+  it('should return true when the blockchain is valid', () => {
+    // Arrange
+    const blockchain = new Blockchain();
+
+    const transaction = {
+      sender: 'Farm A',
+      recipient: 'Roastery B',
+      batchId: 'COFFEE-001',
+      weightKg: 500,
+    };
+
+    blockchain.addTransaction(transaction);
+    blockchain.minePendingTransactions(2);
+
+    // Act
+    const result = blockchain.isChainValid();
+
+    // Assert
+    expect(result).toBe(true);
+  });
 });
