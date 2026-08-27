@@ -28,4 +28,25 @@ describe('Blockchain', () => {
     expect(blockchain.chain).toHaveLength(1);
     expect(blockchain.chain[0].index).toBe(0);
   });
+  it('should mine pending transactions and add a new block', () => {
+    // Arrange
+    const blockchain = new Blockchain();
+
+    const transaction = {
+      sender: 'Farm A',
+      recipient: 'Roastery B',
+      batchId: 'COFFEE-001',
+      weightKg: 500,
+    };
+
+    blockchain.addTransaction(transaction);
+
+    // Act
+    blockchain.minePendingTransactions(2);
+
+    // Assert
+    expect(blockchain.chain).toHaveLength(2);
+    expect(blockchain.chain[1].transactions).toEqual([transaction]);
+    expect(blockchain.pendingTransactions).toHaveLength(0);
+  });
 });
